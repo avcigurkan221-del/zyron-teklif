@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Teklif</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+<style>
+body { font-family:sans-serif; background:#f4f6f8; }
+.container { max-width:800px; margin:40px auto; background:#fff; padding:30px; border-radius:10px; }
+
+.logo img { width:70px; }
+
+.btn { padding:10px 15px; margin-top:15px; border:none; cursor:pointer; }
+.pdf { background:black; color:white; }
+.approve { background:red; color:white; }
+
+.price { color:red; font-weight:bold; }
+</style>
+</head>
+
+<body>
+
+<div class="container" id="pdf">
+
+<div style="display:flex;justify-content:space-between;">
+    <div style="display:flex;gap:10px;align-items:center;">
+        <div class="logo">
+            <img src="/static/logo.png">
+        </div>
+        <strong>ZYRON AJANS</strong>
+    </div>
+
+    <div>
+        {{id}}<br>
+        info@zyronajans.com
+    </div>
+</div>
+
+<h3>SAYIN,</h3>
+{{teklif.firma}}
+
+<h3>TUTAR</h3>
+<span class="price">{{teklif.tutar}} ₺</span>
+
+{% if teklif.status == "onaylandı" %}
+<p style="color:green;font-weight:bold;">✔ Onaylandı</p>
+{% endif %}
+
+<button class="btn pdf" onclick="pdf()">PDF indir</button>
+<button class="btn approve" onclick="approve()">Onayla</button>
+
+</div>
+
+<script>
+function pdf(){
+    html2pdf().from(document.getElementById("pdf")).save();
+}
+
+function approve(){
+    fetch("/approve/{{id}}")
+    .then(()=>{
+        alert("Onaylandı");
+        window.open("https://wa.me/905550000000?text=Teklifi onayladım");
+        location.reload();
+    })
+}
+</script>
+
+</body>
+</html>
