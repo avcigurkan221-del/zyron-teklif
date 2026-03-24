@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Admin</title>
+</head>
+<body style="font-family:sans-serif;padding:30px;">
+
+<h2>Yeni Teklif</h2>
+
+<form method="post" action="/create">
+    Firma: <input name="firma"><br><br>
+    Tutar: <input name="tutar"><br><br>
+    <button>Oluştur</button>
+</form>
+
+<h2>Teklifler</h2>
+
+{% for id, t in teklifler.items() %}
+<p>
+{{t.firma}} - {{t.tutar}}₺ - {{t.status}}
+<a href="/teklif/{{id}}">Aç</a>
+</p>
+{% endfor %}
+
+</body>
+</html>
